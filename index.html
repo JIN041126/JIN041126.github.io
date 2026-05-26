@@ -62,7 +62,7 @@
 </head>
 <body>
 <script>
-    const text = "JinJin爱angel";
+    const textArray = ["JinJin爱angel", "te amo"];
     const totalTimes = 100000;
     let count = 0;
     const lightColorList = [
@@ -81,7 +81,10 @@
 
         const el = document.createElement('div');
         el.className = 'love-word';
-        el.innerText = text;
+        
+        // 70% 概率出现 "JinJin爱angel"，30% 概率出现 "te amo"
+        const randomText = Math.random() < 0.7 ? textArray[0] : textArray[1];
+        el.innerText = randomText;
 
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
