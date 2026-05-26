@@ -66,6 +66,7 @@
     const totalTimes = 200000;
     let count = 0;
     let clickCount = 0;
+    let lastTouchTime = 0;
     const lightColorList = [
         '#f8bbd0',
         '#bbdefb',
@@ -131,12 +132,16 @@
 
     // 桌面点击
     document.addEventListener('click', (e) => {
-        createHeart(e.clientX, e.clientY);
+        // 如果距离上次触摸事件不到300ms，则跳过（防止重复触发）
+        if (Date.now() - lastTouchTime > 300) {
+            createHeart(e.clientX, e.clientY);
+        }
     });
 
     // 手机触摸
     document.addEventListener('touchstart', (e) => {
         e.preventDefault();
+        lastTouchTime = Date.now();
         if (e.touches.length > 0) {
             const touch = e.touches[0];
             createHeart(touch.clientX, touch.clientY);
