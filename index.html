@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -44,7 +44,7 @@
         .heart {
             position: absolute;
             color: #ff87a2;
-            font-size: 28px;
+            font-size: 56px;
             pointer-events: none;
             animation: heartFade 1s ease-out forwards;
             z-index: 2;
@@ -89,7 +89,7 @@
         el.style.left = `${x}px`;
         el.style.top = `${y}px`;
 
-        const fontSize = 18 + Math.random() * 16;
+        const fontSize = 36 + Math.random() * 32;
         el.style.fontSize = `${fontSize}px`;
         el.style.color = lightColorList[Math.floor(Math.random() * lightColorList.length)];
 
@@ -142,4 +142,3 @@
 </script>
 </body>
 </html>
-
