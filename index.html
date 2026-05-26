@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JinJin爱angel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            /* 底层淡鹅黄，上层完整显示线条小狗（无透明遮罩） */
+            background-color: #FFF8DC;
+            background-image: url('https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns3rl93/3111e001103b40889001111111111111~tplv-a9rns3rl93-image.image');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        .love-word {
+            position: absolute;
+            white-space: nowrap;
+            user-select: none;
+            transition: all 0.5s ease;
+            opacity: 0;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+            animation: softMove 2.5s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+        .love-word.active {
+            opacity: 1;
+        }
+        @keyframes softMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-2px); }
+        }
+        /* 粉红色爱心样式 */
+        .heart {
+            position: absolute;
+            color: #ff87a2;
+            font-size: 28px;
+            pointer-events: none;
+            animation: heartFade 1s ease-out forwards;
+            z-index: 2;
+        }
+        @keyframes heartFade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5) translateY(-30px);
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    const text = "JinJin爱angel";
+    const totalTimes = 100000;
+    let count = 0;
+    const lightColorList = [
+        '#f8bbd0',
+        '#bbdefb',
+        '#e1bee7',
+        '#c8e6c9',
+        '#ffe0b2',
+        '#fff59d',
+        '#d1c4e9',
+        '#b2ebf2'
+    ];
+
+    function createWord() {
+        if (count >= totalTimes) return;
+
+        const el = document.createElement('div');
+        el.className = 'love-word';
+        el.innerText = text;
+
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+
+        const fontSize = 18 + Math.random() * 16;
+        el.style.fontSize = `${fontSize}px`;
+        el.style.color = lightColorList[Math.floor(Math.random() * lightColorList.length)];
+
+        document.body.appendChild(el);
+
+        setTimeout(() => {
+            el.classList.add('active');
+        }, 10);
+
+        setTimeout(() => {
+            el.classList.remove('active');
+            setTimeout(() => {
+                el.remove();
+            }, 500);
+        }, 1100);
+
+        count++;
+        setTimeout(createWord, 24);
+    }
+
+    // 生成粉红色爱心
+    function createHeart(x, y) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '❤️';
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 1000);
+    }
+
+    // 桌面点击
+    document.addEventListener('click', (e) => {
+        createHeart(e.clientX, e.clientY);
+    });
+
+    // 手机触摸
+    document.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            createHeart(touch.clientX, touch.clientY);
+        }
+    });
+
+    createWord();
+</script>
+</body>
+</html>
+
